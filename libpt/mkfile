@@ -1,0 +1,11 @@
+</$objtype/mkfile
+
+LIB=libpt.a$O
+CFLAGS=$CFLAGS -p
+HFILES=stb_truetype.h pt.h pt_private.h
+UPDATE=$HFILES
+OFILES=pt.$O\
+
+default:V: all
+
+</sys/src/cmd/mklib
