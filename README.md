@@ -5,6 +5,8 @@ spit relies on sigrid's [libpt](https://git.sr.ht/~ft/libpt) for text rendering 
 ![screenshot](screenshot1.png)  
 ![screenshot](screenshot2.png)  
 
+To toggle fullscreen mode press `f`. Navigate between slides using left/right arrow or home/end. Press `q` or `del` to quit spit. 
+
 Installation:
 -------------
 ```sh
