@@ -1,7 +1,9 @@
 spit
 ====
 A simple presentation tool for 9front.  
-spit relies sigrid's [libpt](https://git.sr.ht/~ft/libpt) for text rendering using TTF fonts.
+spit relies on sigrid's [libpt](https://git.sr.ht/~ft/libpt) for text rendering using TTF fonts.  
+![screenshot](screenshot1.png)  
+![screenshot](screenshot2.png)  
 
 Installation:
 -------------
