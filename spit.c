@@ -15,6 +15,7 @@ int			nslides;
 int			curslide;
 Image		*bol;
 Image		*bullet;
+int			nodraw;
 
 void
 ladd(Lines *l, char *s)
@@ -283,6 +284,22 @@ Title:
 }
 
 void
+barf(void)
+{
+	int fd;
+	char path[64];
+	Image **i;
+
+	for(i=slides; i<slides+nslides+1; i++){
+		snprint(path, sizeof path, "spit.%03zd.bit", i - slides);
+		if((fd = create(path, OWRITE, 0644)) < 0)
+			sysfatal("open: %r");
+		writeimage(fd, *i, 0);
+		close(fd);
+	}
+}
+
+void
 redraw(void)
 {
 	draw(screen, screen->r, slides[curslide], nil, ZP);
@@ -364,7 +381,7 @@ initimages(void)
 void
 usage(void)
 {
-	fprint(2, "%s [-f font] [-F fixedfont] <filename>\n", argv0);
+	fprint(2, "%s [-n] [-f font] [-F fixedfont]<filename>\n", argv0);
 	exits("usage");
 }
 
@@ -385,6 +402,9 @@ threadmain(int argc, char **argv)
 	tname = nil;
 	fname = nil;
 	ARGBEGIN{
+	case 'n':
+		nodraw = 1;
+		break;
 	case 'f':
 		tname = EARGF(usage());
 		break;
@@ -419,6 +439,10 @@ threadmain(int argc, char **argv)
 	initstyle(tname, fname);
 	initimages();
 	render(f);
+	if(nodraw){
+		barf();
+		threadexitsall(nil);
+	}
 	resize();
 	for(;;){
 		switch(alt(alts)){
