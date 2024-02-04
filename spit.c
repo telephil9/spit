@@ -427,12 +427,14 @@ threadmain(int argc, char **argv)
 			case 'f':
 				togglefullscreen();
 				break;
+			case Kbs:
 			case Kleft:
 				if(curslide > 0){
 					curslide--;
 					redraw();
 				}
 				break;
+			case ' ':
 			case Kright:
 				if(curslide < nslides){
 					curslide++;
