@@ -12,7 +12,7 @@ typedef struct Lines Lines;
 
 enum 
 {
-	Maxslides = 64,
+	Maxslides = 128,
 	Maxlines  = 16 
 };
 
