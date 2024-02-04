@@ -1,3 +1,4 @@
+; Demonstration of spit capabilities
 # A sample presentation
 spit is a simple presentation tool for plan9.
 spit presentations are simple markdown-like files.
@@ -7,11 +8,12 @@ spit understands the following elements:
 - Quote if the line starts with '> '
 - Code if the line is ``` (code block is ended with a similar line).
 - Image, in p9 format, if the line starts with '! '
+Lines starting with a semicolon are comments and ignored by spit.
 
 spit doesn't try to do proper layout or resizing, it's on you.
 
-# Some style examples
-Here is a simple hello world in plan9 C
+# Some examples
+Here is a simple hello world in plan9 C:
 ```
 #include <u.h>
 #include <libc.h>

@@ -191,7 +191,7 @@ renderimage(Image *b, Point p, char *f)
 void
 render(char *f)
 {
-	enum { Sstart, Scontent, Slist, Squote, Scode };
+	enum { Sstart, Scomment, Scontent, Slist, Squote, Scode };
 	Biobuf *bp;
 	char *l;
 	int s, ln;
@@ -214,11 +214,18 @@ render(char *f)
 Again:
 		switch(s){
 		case Sstart:
+			if(l[0] == ';'){
+				free(l);
+				continue;
+			}
 			if(l[0] != '#') error(f, ln, "expected title line");
 Title:
 			p = Pt(margin, margin);
 			b = addslide();
 			p = rendertitle(b, p, l+2);
+			s = Scontent;
+			break;
+		case Scomment:
 			s = Scontent;
 			break;
 		case Scontent:
@@ -235,7 +242,10 @@ Title:
 				break;
 			}else if(l[0] == '!')
 				p = renderimage(b, p, l+2);
-			else
+			else if(l[0] == ';'){
+				s = Scomment;
+				break;
+			}else
 				p = rendertext(b, p, l);
 			break;
 		case Slist:
@@ -392,6 +402,7 @@ threadmain(int argc, char **argv)
 		fprint(2, "missing filename\n");
 		usage();
 	}
+	setfcr(getfcr() & ~(FPZDIV | FPOVFL | FPINVAL));
 	if(initdraw(nil, nil, argv0) < 0)
 		sysfatal("initdraw: %r");
 	if((mc = initmouse(nil, screen)) == nil)
